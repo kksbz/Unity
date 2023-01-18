@@ -167,9 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19819554395542a498749080081dfe90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverTextObj: {fileID: 639565748}
-  timeText: {fileID: 1985595716}
-  BestRecordText: {fileID: 1949876996}
 --- !u!1 &239978803
 GameObject:
   m_ObjectHideFlags: 0

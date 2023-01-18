@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using TMPro;
+//using UnityEngine.SceneManagement;
+//using TMPro;
 
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject gameOverTextObj = default; //!< 게임오버 시 활성화할 텍스트 게임 오브젝트
-    public TMP_Text timeText = default; //!< 생존 시간을 표시할 텍스트
-    public TMP_Text BestRecordText = default; //!< 최고기록을 표시할 텍스트
+    private GameObject gameOverTextObj = default; //!< 게임오버 시 활성화할 텍스트 게임 오브젝트
+    private GameObject timeTextObj = default; //!< 생존 시간을 표시할 텍스트
+    private GameObject bestRecordTextObj = default; //!< 최고기록을 표시할 텍스트
     private const string SCENE_NAME = "SampleScene";
     private const string BEST_TIME_RECORD = "BestTime";
 
@@ -20,10 +20,31 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //{출력할 텍스트 오브젝트를 찾아온다
+        GameObject uiObj_ = GFunc.GetRootObj("UiObj");
+        timeTextObj = uiObj_.FindChildObj("TimeText");
+        gameOverTextObj = uiObj_.FindChildObj("GameOverText");
+        bestRecordTextObj = uiObj_.FindChildObj("BestTimeText");
+        //}출력할 텍스트 오브젝트를 찾아온다
+
         //생존 시간과 게임오버 상태 초기화
         surviveTime = 0f;
         isGameOver = false;
         gameOverTextObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+        //확장메서드 호출함 
+        //gameObject.KksFunc();
+
+
+
+        /* GameObject targetObj = GFunc.GetRootObj("UiObj");
+        if(targetObj == null || targetObj == default)
+        {
+            Debug.Log("UiObj는 root 오브젝트가 아니라 못찾음");
+        }
+        else
+        {
+            Debug.Log("UiObj는 root 오브젝트가 맞아서 찾음");
+        } */
     }
 
     // Update is called once per frame
@@ -35,16 +56,12 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 //SampleScene 씬을 로드
-                SceneManager.LoadScene(SCENE_NAME);
+                GFunc.LoadScene(SCENE_NAME);
             }
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
+                GFunc.QuitThisGame(); //static으로 만든 GFunc클래스에서 호출함
             }
         }
 
@@ -52,8 +69,8 @@ public class GameManager : MonoBehaviour
 
         //생존 시간 갱신
         surviveTime += Time.deltaTime;
+        GFunc.SetTmpText(timeTextObj, $"time:{Mathf.FloorToInt(surviveTime)}");
         //갱신한 생존 시간을 timeText 텍스트 컴포넌트를 이용해 표시
-        timeText.text = "Time: " + (int)surviveTime;
     } //Update
 
     //현재 게임을 게임오버 상태로 변경하는 메서드
@@ -75,7 +92,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat(BEST_TIME_RECORD, bestTime);
         }
         //최고 기록을 recordText 텍스트 컴포넌트를 이용해 표시
-        BestRecordText.text = $"best time:{Mathf.FloorToInt(bestTime)}";
+        GFunc.SetTmpText(bestRecordTextObj, $"best time:{Mathf.FloorToInt(bestTime)}");
     }
 
 }
