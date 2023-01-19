@@ -13,28 +13,30 @@ public class BulletManager : MonoBehaviour
     {
         bullets = new List<GameObject>();
         GameObject bullet = default;
-        for(int i = 0;i<20;i++)
+        for (int i = 0; i < 20; i++)
         {
             bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
             bullet.SetActive(false);
             bullets.Add(bullet);
+            bullet.transform.parent = gameObject.transform.Find("PlayerBullet");
         }
 
         enemyBullets = new List<GameObject>();
         GameObject enemyBullet = default;
-        for(int i =0; i< 30; i++)
+        for (int i = 0; i < 50; i++)
         {
             enemyBullet = Instantiate(enemyBulletPrefab, transform.position, transform.rotation);
             enemyBullet.SetActive(false);
             enemyBullets.Add(enemyBullet);
+            enemyBullet.transform.parent = gameObject.transform.Find("EnemyBullet");
         }
     }
 
     public GameObject GetBullet()
     {
-        foreach(GameObject bullet_ in bullets)
+        foreach (GameObject bullet_ in bullets)
         {
-            if(!bullet_.activeInHierarchy)
+            if (!bullet_.activeInHierarchy)
             {
                 return bullet_;
             }
@@ -47,23 +49,22 @@ public class BulletManager : MonoBehaviour
 
     public GameObject GetEnemyBullet()
     {
-        foreach(GameObject bullet_ in enemyBullets)
+        GameObject temp = default;
+        foreach (GameObject bullet_ in enemyBullets)
         {
-            if(!bullet_.activeInHierarchy)
+            if (!bullet_.activeInHierarchy)
             {
-                return bullet_;
+                temp = bullet_;
+                return temp;
             }
         }
-        GameObject bullet = Instantiate(enemyBulletPrefab, transform.position, transform.rotation);
-        bullet.SetActive(false);
-        enemyBullets.Add(bullet);
-        return bullet;
+        return temp;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

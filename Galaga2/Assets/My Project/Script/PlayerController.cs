@@ -22,10 +22,10 @@ public class PlayerController : MonoBehaviour
         playerRb.velocity = newVelocity;
         ShootBullet();
     }
-    
+
     void ShootBullet()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             GameObject bullet = bulletManager.GetBullet();
             bullet.gameObject.transform.position = playerRb.position;

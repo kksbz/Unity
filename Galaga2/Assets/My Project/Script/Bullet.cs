@@ -21,12 +21,12 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        if (other.tag == "Enemy")
         {
             EnemyController enemy = other.GetComponent<EnemyController>();
             enemy.Die();
         }
-    }    
+    }
     // Update is called once per frame
     void Update()
     {
