@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     private const string SCENE_NAME = "PlayScene";
     private const string BEST_SCORE_RECORD = "BestScore";
     private bool isGameOver = default; //게임오버 상태
-    private float scoreNum = default;
+    public static int scoreNum = default; //점수
+    public int bestScore = default;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,8 @@ public class GameManager : MonoBehaviour
         //}출력할 텍스트 오브젝트를 찾아온다
 
         isGameOver = default;
-        scoreNum = 0f;
+        scoreNum = 0;
+        bestScore = 0;
         gameOverTextObj.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
     }
 
@@ -45,9 +47,8 @@ public class GameManager : MonoBehaviour
                 GFunc.QuitGame(); //static으로 만든 GFunc클래스에서 호출함
             }
         }
-
-        scoreNum += Time.deltaTime;
-        GFunc.SetTmpText(scoreTextObj, $"Score:{Mathf.FloorToInt(scoreNum)}");
+        //score점수 텍스트창에 출력
+        GFunc.SetTmpText(scoreTextObj, $"Score:{scoreNum}");
     }
 
     //현재 게임을 게임오버 상태로 변경하는 메서드
@@ -59,17 +60,16 @@ public class GameManager : MonoBehaviour
         gameOverTextObj.SetActive(true);
         gameOverTextObj.transform.localScale = Vector3.one;
         //BEST_TIME_RECORD키로 저장된 이전까지의 최고 기록 가져오기
-        float bestScore = PlayerPrefs.GetFloat(BEST_SCORE_RECORD);
+        bestScore = PlayerPrefs.GetInt(BEST_SCORE_RECORD);
         //if : 이전까지의 최고 기록보다 현재 생존 시간이 더 크면
         if (bestScore < scoreNum)
         {
             //최고 기록 값을 현재 생존 시간 값으로 변경
             bestScore = scoreNum;
             //변경된 최고 기록을 BEST_TIME_RECORD 키로 저장
-            PlayerPrefs.SetFloat(BEST_SCORE_RECORD, bestScore);
+            PlayerPrefs.SetInt(BEST_SCORE_RECORD, bestScore);
         }
         //최고 기록을 recordText 텍스트 컴포넌트를 이용해 표시
-        Debug.Log($"겜매니져70줄이 문제임{bestScore}");
-        GFunc.SetTmpText(bestRecordTextObj, $"BestScore:{Mathf.FloorToInt(bestScore)}");
+        GFunc.SetTmpText(bestRecordTextObj, $"BestScore:{bestScore}");
     }
 }

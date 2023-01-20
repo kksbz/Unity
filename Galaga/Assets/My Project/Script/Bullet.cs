@@ -29,6 +29,7 @@ public class Bullet : MonoBehaviour
                 return;
             }
             enemy.Die();
+            gameObject.SetActive(false);
         }
     }
     // Update is called once per frame

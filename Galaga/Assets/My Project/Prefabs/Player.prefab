@@ -128,5 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a1b7ce1d2a3c84fa2bb940f349da7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMt: {fileID: 0}
   playerSpeed: 20
+  isRespawnTime: 0
   bulletManager: {fileID: 0}

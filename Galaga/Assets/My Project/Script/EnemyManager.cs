@@ -19,6 +19,7 @@ public class EnemyManager : MonoBehaviour
         enemys = new List<GameObject>();
         GameObject enemy = default;
         for (int i = 0; i < 15; i++)
+        // for (int i = 0; i < 5; i++)
         {
             if (0 <= i && i < 5)
             {
@@ -34,22 +35,30 @@ public class EnemyManager : MonoBehaviour
             }
             enemy.SetActive(false);
             enemys.Add(enemy);
-            enemy.transform.parent = enemy.transform.Find("EnemySpwan");
+            //enemy.transform.parent = enemy.transform.Find("EnemySpwan");
         }
-    }
+    } //Start
 
     //적리스트에서 한개 리턴받는 함수
     public GameObject GetEnemy()
     {
-        foreach (GameObject enemy in enemys)
+        /* int rN = Random.RandomRange(0, enemys.Count);
+        while(!enemys[rN].activeInHierarchy)
         {
-            if (!enemy.activeInHierarchy)
+            if(!enemys[rN].activeInHierarchy)
             {
-                return enemy;
+                return enemys[rN];
             }
+            rN = Random.RandomRange(0, enemys.Count);
+        } */
+        GameObject newEnemy = default;
+        int rN = Random.RandomRange(0, enemys.Count);
+        Debug.Log(rN);
+        if(!enemys[rN].activeInHierarchy)
+        {
+            newEnemy = enemys[rN];
         }
-        GameObject _enemy = default;
-        return _enemy;
+        return newEnemy;
     }
 
     // Update is called once per frame
@@ -70,9 +79,11 @@ public class EnemyManager : MonoBehaviour
             {
                 return;
             }
-            enemyObj.transform.rotation = Quaternion.Euler(0f, 180f, 0f); //방향 반대로
-            enemyObj.transform.position = new Vector3(Random.RandomRange(-20, 20), 0f, Random.RandomRange(9, 12)); //랜덤위치에서 생성
-            enemyObj.SetActive(true);
+            else
+            {
+                enemyObj.transform.position = new Vector3(0f, 0f, 13f);
+                enemyObj.SetActive(true);
+            }
         }
     }
 }

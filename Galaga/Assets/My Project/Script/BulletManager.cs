@@ -41,7 +41,7 @@ public class BulletManager : MonoBehaviour
                 return bullet_;
             }
         }
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        GameObject bullet = default;
         bullet.SetActive(false);
         bullets.Add(bullet);
         return bullet;

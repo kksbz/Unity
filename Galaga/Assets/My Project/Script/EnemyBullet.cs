@@ -19,7 +19,7 @@ public class EnemyBullet : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log("탄삭제 실행중");
+        // Debug.Log("탄flase화 실행중");
         Invoke("DisableSelf", 4f);
     }
     public void DisableSelf() => gameObject.SetActive(false);
@@ -34,6 +34,7 @@ public class EnemyBullet : MonoBehaviour
                 return;
             }
             player.Die();
+            gameObject.SetActive(false);
         }
     }
     public void SetVelocity()
